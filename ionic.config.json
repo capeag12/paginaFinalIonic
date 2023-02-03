@@ -1,0 +1,7 @@
+{
+  "name": "paginaFinalIonic",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
