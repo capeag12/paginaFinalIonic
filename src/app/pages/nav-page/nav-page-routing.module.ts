@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { BuscarPage } from '../buscar/buscar.page';
 import { CatalogoPage } from '../catalogo/catalogo.page';
 
 import { NavPagePage } from './nav-page.page';
@@ -11,11 +12,17 @@ const routes: Routes = [
     children:[
       {
         path:'',
-        component:CatalogoPage
+        redirectTo:'catalogo',
+        pathMatch:'full'
       }
-      ,{
+      ,
+      {
         path:'catalogo',
         component:CatalogoPage
+      },
+      {
+        path:'buscar',
+        component:BuscarPage
       }
     ]
   }
