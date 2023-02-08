@@ -1,4 +1,4 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, Input, OnInit } from '@angular/core';
 
 @Component({
   standalone:true,
@@ -8,7 +8,7 @@ import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
   schemas:[CUSTOM_ELEMENTS_SCHEMA]
 })
 export class ProductoComponent implements OnInit {
-
+  @Input() id:number=-1
   constructor() { }
 
   ngOnInit() {}
