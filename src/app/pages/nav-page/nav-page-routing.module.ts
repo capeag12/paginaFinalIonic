@@ -18,7 +18,8 @@ const routes: Routes = [
       ,
       {
         path:'catalogo',
-        component:CatalogoPage
+        component:CatalogoPage,
+        canActivate:[]
       },
       {
         path:'buscar',

@@ -3,12 +3,14 @@ export class Juego {
     private nombre:string;
     private precio:number;
     private comprado:boolean;
+    private rutaImg:string
 
-    constructor(id:string, nombre:string,precio:number, comprado:boolean) {
+    constructor(id:string, nombre:string,precio:number, comprado:boolean,rutaImg:string) {
         this.id = id;
         this.nombre = nombre;
         this.precio = precio;
         this.comprado = comprado;
+        this.rutaImg = rutaImg
     }
 
     
@@ -24,6 +26,11 @@ export class Juego {
     public get Comprado() : boolean {
         return this.comprado
     }
+
+    public get RutaImg() : string {
+        return this.rutaImg
+    }
+    
     
 
      

@@ -8,7 +8,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'nav-page',
+    redirectTo: 'login-page',
     pathMatch: 'full'
   },
   {
@@ -23,6 +23,11 @@ const routes: Routes = [
     path: 'buscar',
     loadChildren: () => import('./pages/buscar/buscar.module').then( m => m.BuscarPageModule)
   },
+  {
+    path: 'login-page',
+    loadChildren: () => import('./pages/login-page/login-page.module').then( m => m.LoginPagePageModule)
+  },
+
 ];
 
 @NgModule({

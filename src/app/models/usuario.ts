@@ -12,7 +12,6 @@ export class Usuario {
         this.juegosSubidos = juegosSubidos
         this.juegosPublicados = juegosPublicados
     }
-
     
     public get Correo() : string {
         return this.correo
