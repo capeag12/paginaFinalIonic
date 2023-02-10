@@ -64,17 +64,25 @@
     <ng-template>
       <ion-header>
         <ion-toolbar>
-          <ion-buttons slot="start">
-            <ion-button>Cancelar</ion-button>
+          <ion-buttons slot="end">
+            <ion-button (click)="cancelar()">Cancelar</ion-button>
           </ion-buttons>
           <ion-title>Registrarme</ion-title>
-          <ion-buttons slot="end">
-            <ion-button [strong]="true">Confirmar</ion-button>
-          </ion-buttons>
         </ion-toolbar>
       </ion-header>
       <ion-content class="ion-padding">
         <ion-grid>
+          <form [formGroup]="formRegistrarme">
+          <ion-row>
+            <ion-col size="0.5"></ion-col>
+            <ion-col size="11">
+              <ion-item>
+                <ion-label position="floating">Nombre:</ion-label>
+              <ion-input type="text" placeholder="Introduce un email" ></ion-input>
+            </ion-item></ion-col>
+            <ion-col size=".5"></ion-col>
+          </ion-row>
+          <br>
           <ion-row>
             <ion-col size="0.5"></ion-col>
             <ion-col size="11">
@@ -98,12 +106,11 @@
           <ion-row>
             <ion-col size="0.5"></ion-col>
             <ion-col size="11">
-              <ion-item>
-                <ion-label position="floating">Nombre:</ion-label>
-              <ion-input type="text" placeholder="Introduce un email" ></ion-input>
-            </ion-item></ion-col>
+              <ion-button id="btnRegist" fill="outline">Registrarme</ion-button>
+            </ion-col>
             <ion-col size=".5"></ion-col>
           </ion-row>
+        </form>
         </ion-grid>
         
         
