@@ -1,7 +1,7 @@
 import { types } from "util";
 
 export type Peticion={
-    token:String,
+    token:string,
     usuario:{
         correo:string
         nombre:string

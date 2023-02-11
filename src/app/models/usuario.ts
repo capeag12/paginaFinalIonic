@@ -1,11 +1,13 @@
 import { Juego } from "./juego"
 
 export class Usuario {
+    private id:string
     private correo:string
     private nombre:string
     
 
-    constructor(correo:string, nombre:string) {
+    constructor(id:string,correo:string, nombre:string) {
+        this.id = id
         this.correo = correo
         this.nombre = nombre
        
