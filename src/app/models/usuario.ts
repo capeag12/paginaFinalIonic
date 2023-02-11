@@ -3,14 +3,12 @@ import { Juego } from "./juego"
 export class Usuario {
     private correo:string
     private nombre:string
-    private juegosSubidos:Juego[]
-    private juegosPublicados:Juego[]
+    
 
-    constructor(correo:string, nombre:string, juegosSubidos:Juego[], juegosPublicados:Juego[]) {
+    constructor(correo:string, nombre:string) {
         this.correo = correo
         this.nombre = nombre
-        this.juegosSubidos = juegosSubidos
-        this.juegosPublicados = juegosPublicados
+       
     }
     
     public get Correo() : string {
@@ -21,13 +19,6 @@ export class Usuario {
         return this.nombre
     }
     
-    public get JuegosSubidos() : Juego[] {
-        return this.juegosSubidos
-    }
-
-    public get JuegosPublicados() : Juego[] {
-        return this.juegosPublicados
-    }
     
 
 }
