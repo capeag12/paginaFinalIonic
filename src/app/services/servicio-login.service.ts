@@ -58,7 +58,8 @@ export class ServicioLoginService {
   }
 
   async logToken(){
-    let tokenLoc = await this.getTokenLocal
+    let tokenLoc = await this.getTokenLocal()
+    console.log(tokenLoc)
     if (tokenLoc == null) {
       
     }

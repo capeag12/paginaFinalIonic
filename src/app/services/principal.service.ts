@@ -30,23 +30,28 @@ export class PrincipalService {
     return this.subjectUsuario.asObservable();
   }
 
-  async loginInicial(){
-    await (await this.servicioLogin.logToken()).subscribe(user =>{
-      console.log(user)
-      this.UsuarioLogeado = new Usuario(user.usuario._id,user.usuario.nombre, user.usuario.correo);
+  loginInicial(){
+    this.servicioLogin.logToken().then(res=>{res.subscribe(user =>{
+      console.log(user.usuario._id)
+      
+      this.UsuarioLogeado = new Usuario(user.usuario._id,user.usuario.correo, user.usuario.nombre);
+      console.log(this.UsuarioLogeado)
       this.subjectUsuario.next(this.usuariologeado)
     }, err=>{
       this.subjectUsuario.next(undefined)
       console.log(err)
 
-    })
+    })}).catch(err=>{console.log(err)})
+    
+    
+    
     
   }
 
   hacerLogin(correo:string, pass:string){
     this.servicioLogin.logearme(correo,pass).subscribe((user) => {
       this.servicioLogin.saveToken(user.token)
-      this.UsuarioLogeado = new Usuario(user.usuario._id,user.usuario.nombre, user.usuario.correo);
+      this.UsuarioLogeado = new Usuario(user.usuario._id,user.usuario.correo, user.usuario.nombre);
       this.subjectUsuario.next(this.usuariologeado)
    
     },err=>{
