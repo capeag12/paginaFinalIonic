@@ -34,7 +34,7 @@ export class PrincipalService {
     this.servicioLogin.logToken().then(res=>{res.subscribe(user =>{
       console.log(user.usuario._id)
       
-      this.UsuarioLogeado = new Usuario(user.usuario._id,user.usuario.correo, user.usuario.nombre);
+      this.UsuarioLogeado = new Usuario(user.usuario._id,user.usuario.email, user.usuario.nombre);
       console.log(this.UsuarioLogeado)
       this.subjectUsuario.next(this.usuariologeado)
     }, err=>{
@@ -43,15 +43,12 @@ export class PrincipalService {
 
     })}).catch(err=>{console.log(err)})
     
-    
-    
-    
   }
 
   hacerLogin(correo:string, pass:string){
     this.servicioLogin.logearme(correo,pass).subscribe((user) => {
       this.servicioLogin.saveToken(user.token)
-      this.UsuarioLogeado = new Usuario(user.usuario._id,user.usuario.correo, user.usuario.nombre);
+      this.UsuarioLogeado = new Usuario(user.usuario._id,user.usuario.email, user.usuario.nombre);
       this.subjectUsuario.next(this.usuariologeado)
    
     },err=>{

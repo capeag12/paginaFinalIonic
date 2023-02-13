@@ -59,14 +59,14 @@ export class ServicioLoginService {
 
   async logToken(){
     let tokenLoc = await this.getTokenLocal()
-    console.log(tokenLoc)
+    
     if (tokenLoc == null) {
       
     }
     else{
       this.token = ""+tokenLoc
     }
-    console.log(tokenLoc)
+    
     const options = {headers: {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'}};
     return this.http.post<Peticion>(`${this.urlbase}/loginUsuarioToken`, "" ,options)
   }
@@ -77,5 +77,10 @@ export class ServicioLoginService {
 
   }
 
+  
+
+
+
+    
 
 }
