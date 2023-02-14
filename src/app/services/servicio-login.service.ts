@@ -57,7 +57,7 @@ export class ServicioLoginService {
     return this.http.post<Peticion>(`${this.urlbase}/loginUsuario`, texto ,options)
   }
 
-  async logToken(){
+  async logToken():Promise<Observable<Peticion>>{
     let tokenLoc = await this.getTokenLocal()
     
     if (tokenLoc == null) {
