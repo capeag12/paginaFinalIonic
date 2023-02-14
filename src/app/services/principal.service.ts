@@ -31,17 +31,13 @@ export class PrincipalService {
   }
 
   loginInicial(){
-    this.servicioLogin.logToken().then(res=>{res.subscribe(user =>{
-      console.log(user.usuario._id)
-      
+    this.servicioLogin.logToken().subscribe((user) => {
+      console.log(user)
       this.UsuarioLogeado = new Usuario(user.usuario._id,user.usuario.email, user.usuario.nombre);
-      console.log(this.UsuarioLogeado)
       this.subjectUsuario.next(this.usuariologeado)
-    }, err=>{
+    } ,err=>{
       this.subjectUsuario.next(undefined)
-      console.log(err)
-
-    })}).catch(err=>{console.log(err)})
+    })
     
   }
 

@@ -9,15 +9,17 @@ import { ServicioLoginService } from './servicio-login.service';
 export class AuthInterceptorService implements HttpInterceptor {
   token:string
   constructor(private servicioLogin:ServicioLoginService) { 
-    this.token =""
+    this.token =servicioLogin.getTokenLocal() || ""
     if (servicioLogin.Token != undefined) {
-      this.token = ""+servicioLogin.Token
+      this.token = "Bearer "+servicioLogin.Token
     }
 
   }
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const authReq = req.clone({
-      headers:req.headers.append('Authorization',this.token)
+      setHeaders: {
+        Authorization: this.token
+      }
     })
 
     return next.handle(authReq)

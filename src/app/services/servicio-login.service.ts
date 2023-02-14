@@ -16,26 +16,27 @@ export class ServicioLoginService {
 
   }
 
-  async getTokenLocal():Promise<string | undefined>{
-    const token = await (await Preferences.get({key:'tokenTienda'})).value
+  getTokenLocal():string | undefined{
+    let token = localStorage.getItem('tokenTienda');
     let tokenReturn:string|undefined
     if (token == null) {
-      tokenReturn = undefined
+      tokenReturn = undefined;
     }
     else{
-      tokenReturn = ""+token
+      tokenReturn = token;
     }
-    return tokenReturn
+
+    return tokenReturn;
     
   }
 
   async saveToken(token:string){
-    await Preferences.set({key:'tokenTienda', value:token})
+    localStorage.setItem('tokenTienda',token)
     this.token = token
   }
 
-  async eliminarToken(){
-      await Preferences.remove({key:'tokenTienda'})
+  eliminarToken(){
+    localStorage.removeItem('tokenTienda');
   }
 
   
@@ -57,25 +58,21 @@ export class ServicioLoginService {
     return this.http.post<Peticion>(`${this.urlbase}/loginUsuario`, texto ,options)
   }
 
-  async logToken():Promise<Observable<Peticion>>{
-    let tokenLoc = await this.getTokenLocal()
-    
-    if (tokenLoc == null) {
-      
-    }
-    else{
-      this.token = ""+tokenLoc
-    }
+  logToken():Observable<Peticion>{
+    let tokenLoc = this.getTokenLocal()
     
     const options = {headers: {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'}};
     return this.http.post<Peticion>(`${this.urlbase}/loginUsuarioToken`, "" ,options)
   }
 
   desloguearme(){
-    this.http.post(`${this.urlbase}/logout`,"")
     this.eliminarToken()
+    this.http.post(`${this.urlbase}/logout`,"")
+    
 
   }
+
+  
 
   
 
