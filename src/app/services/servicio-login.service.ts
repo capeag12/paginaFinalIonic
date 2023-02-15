@@ -67,17 +67,11 @@ export class ServicioLoginService {
 
   desloguearme(){
     this.eliminarToken()
-    this.http.post(`${this.urlbase}/logout`,"")
+    this.http.post(`${this.urlbase}/logout`,"").subscribe((res)=>{
+      console.log(res)
+  })
     
-
-  }
-
   
-
-  
-
-
-
-    
+}
 
 }
