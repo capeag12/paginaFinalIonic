@@ -70,7 +70,7 @@ export class LoginPagePage implements OnInit {
   }
 
   iniciarSesion(){
-    this.servicio.hacerLogin(this.mailLogin.value, this.psswdLogin.value)
+    this.servicio.hacerLoginSinToken(this.mailLogin.value, this.psswdLogin.value)
     this.formLogearme.reset()
     
     

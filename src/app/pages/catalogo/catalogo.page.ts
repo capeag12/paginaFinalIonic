@@ -15,16 +15,15 @@ export class CatalogoPage implements OnInit {
     this.servicio.getLoginObservable().subscribe(usuario =>{
       console.log(usuario)
       if (usuario==undefined) {
-        
+        console.log("No hay usuario")
         this.router.navigate(["../login-page"])
       }
       else{
         this.usuario=usuario
+        console.log(usuario)
       }
     })
-
-    
-    this.servicio.loginInicial()
+    servicio.hacerLoginConToken()
   }
 
   ngOnInit() {

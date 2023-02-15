@@ -30,30 +30,37 @@ export class PrincipalService {
     return this.subjectUsuario.asObservable();
   }
 
-  loginInicial(){
-    this.servicioLogin.logToken().subscribe((user) => {
-      console.log(user)
-      this.UsuarioLogeado = new Usuario(user.usuario._id,user.usuario.email, user.usuario.nombre);
+  hacerLoginSinToken(usuario:string, password:string){
+    this.servicioLogin.obtenerTokenLogin(usuario, password).subscribe(peticion=>{
+      console.log(peticion)
+      this.servicioLogin.saveToken(peticion.token)
+      this.usuariologeado = new Usuario(peticion.usuario._id, peticion.usuario.email, peticion.usuario.nombre)
       this.subjectUsuario.next(this.usuariologeado)
-    } ,err=>{
+
+    }, err=>{
       this.subjectUsuario.next(undefined)
     })
-    
   }
 
-  hacerLogin(correo:string, pass:string){
-    this.servicioLogin.logearme(correo,pass).subscribe((user) => {
-      this.servicioLogin.saveToken(user.token)
-      this.UsuarioLogeado = new Usuario(user.usuario._id,user.usuario.email, user.usuario.nombre);
+  hacerLoginConToken(){
+    this.servicioLogin.login().subscribe(peticion=>{
+      console.log(peticion)
+      this.usuariologeado = new Usuario(peticion.usuario._id, peticion.usuario.email, peticion.usuario.nombre)
       this.subjectUsuario.next(this.usuariologeado)
-   
     },err=>{
       this.subjectUsuario.next(undefined)
     })
-   
   }
 
   hacerLogout(){
-    this.servicioLogin.desloguearme()
+    this.servicioLogin.deslogearme().subscribe(peticion=>{
+      this.subjectUsuario.next(undefined)
+      this.servicioLogin.eliminarToken()
+      console.log("Deslogueado")
+
+    },err=>{
+     
+    })
   }
+
 }

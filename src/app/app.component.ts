@@ -13,15 +13,14 @@ export class AppComponent {
   @ViewChild(IonMenu) menu!:IonMenu
   usuario:Usuario|undefined
   constructor(private servicioPrincipal:PrincipalService, private router:Router) {
+    console.log("Se ha iniciado el app.component")
     this.servicioPrincipal.getLoginObservable().subscribe(usu=>{this.usuario=usu 
       console.log(usu)})
   }
 
 
   desloguearme(){
-    this.menu.close(true)
     this.servicioPrincipal.hacerLogout()
-    this.router.navigate(["login-page"])
   }
 
 }

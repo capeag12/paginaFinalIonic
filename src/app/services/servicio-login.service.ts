@@ -43,35 +43,39 @@ export class ServicioLoginService {
   public get Token() : string|undefined {
     return this.token
   }
-  
 
-  logearme(correo:string, contraseña:string):Observable<Peticion>{
-    let jsonObs:Object = new Object()
-    const options = {headers: {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'}};
-    let usuarioLog = {
-      email:correo,
-      passwd:contraseña
+  obtenerTokenLogin(email:string, passwd:string):Observable<Peticion>{
+    let url = this.urlbase+"/loginUsuario";
+    let body = {email:email, passwd:passwd}
+    const texto = JSON.stringify(body)
+    const options = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
     }
-    const texto = JSON.stringify(usuarioLog)
+    return this.http.post<Peticion>(url,texto,options)
     
-    
-    return this.http.post<Peticion>(`${this.urlbase}/loginUsuario`, texto ,options)
   }
 
-  logToken():Observable<Peticion>{
-    let tokenLoc = this.getTokenLocal()
-    
-    const options = {headers: {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'}};
-    return this.http.post<Peticion>(`${this.urlbase}/loginUsuarioToken`, "" ,options)
+  login():Observable<Peticion>{
+    const options = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+    return this.http.post<Peticion>(this.urlbase+"/loginUsuarioToken","",options)
   }
 
-  desloguearme(){
-    this.eliminarToken()
-    this.http.post(`${this.urlbase}/logout`,"").subscribe((res)=>{
-      console.log(res)
-  })
+  deslogearme():Observable<Object>{
+    const options = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+    return this.http.post<Object>(this.urlbase+"/logout","",options)
+  }
+  
     
   
 }
 
-}

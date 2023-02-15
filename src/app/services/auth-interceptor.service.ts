@@ -18,7 +18,8 @@ export class AuthInterceptorService implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const authReq = req.clone({
       setHeaders: {
-        Authorization: this.token
+        Authorization: this.token,
+        'Access-Control-Allow-Origin': '*'
       }
     })
 
