@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { GuardLoginGuard } from 'src/app/guards/guard-login.guard';
 import { BuscarPage } from '../buscar/buscar.page';
 import { CatalogoPage } from '../catalogo/catalogo.page';
 
@@ -9,6 +10,7 @@ const routes: Routes = [
   {
     path: '',
     component: NavPagePage,
+    
     children:[
       {
         path:'',
@@ -18,8 +20,7 @@ const routes: Routes = [
       ,
       {
         path:'catalogo',
-        component:CatalogoPage,
-        canActivate:[]
+        component:CatalogoPage
       },
       {
         path:'buscar',

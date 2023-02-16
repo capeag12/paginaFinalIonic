@@ -13,12 +13,14 @@ export class GuardLoginGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    
-    if (this.servicio.UsuarioLogeado==undefined) {
-      
-    }
-    
-    return true;
+      console.log("GuardLoginGuard")
+    if (this.servicio.Usuario==undefined) {
+      console.log("No hay usuario")
+      this.router.navigate(['login-page'])
+      return false;
+    } else{
+      console.log("Si hay usuario")
+      return true;}  
   }
   
 }

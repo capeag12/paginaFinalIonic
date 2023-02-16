@@ -67,9 +67,10 @@ export class LoginPagePage implements OnInit {
       if(usuario==undefined){
         await this.presentAlert();
       } else{
-        this.route.navigate(["nav-page"])
+        this.route.navigate(["nav-page/catalogo"])
       }
     })
+    this.formLogearme.reset()
     
   }
 

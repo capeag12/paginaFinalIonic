@@ -26,4 +26,9 @@ export class AppComponent {
     this.menu.close()
   }
 
+  navegarDetalles(){
+    this.router.navigate(["detalles-usuario"])
+    this.menu.close()
+  }
+
 }
