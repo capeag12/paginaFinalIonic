@@ -25,7 +25,7 @@ export class ServicioLoginService {
     else{
       tokenReturn = token;
     }
-
+    console.log(tokenReturn)
     return tokenReturn;
     
   }

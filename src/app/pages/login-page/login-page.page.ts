@@ -41,17 +41,8 @@ export class LoginPagePage implements OnInit {
       mail:this.mailLogin,
       password:this.psswdLogin
     })
-
-    this.servicio.getLoginObservable().subscribe( async(usu)=>{
-      if (usu == undefined) {
-        await this.presentAlert()
-      } 
-      else{
-        route.navigate(['../nav-page'])
-
-      }
-
-    })
+    
+   
   }
 
   
@@ -70,9 +61,15 @@ export class LoginPagePage implements OnInit {
   }
 
   iniciarSesion(){
-    this.servicio.hacerLoginSinToken(this.mailLogin.value, this.psswdLogin.value)
-    this.formLogearme.reset()
-    
+    this.servicio.hacerLoginNoToken(this.mailLogin.value,this.psswdLogin.value)
+    this.servicio.getUsuarioObservable().subscribe( async(usuario)=>{
+      console.log("Usuario: ",usuario)
+      if(usuario==undefined){
+        await this.presentAlert();
+      } else{
+        this.route.navigate(["nav-page"])
+      }
+    })
     
   }
 

@@ -2,65 +2,71 @@ import { Injectable } from '@angular/core';
 import { Usuario } from '../models/usuario';
 import { ServicioLoginService } from './servicio-login.service';
 import { HttpClient } from '@angular/common/http';
-import { catchError, mergeMap, Observable, of, Subject, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, mergeMap, Observable, of, Subject, throwError } from 'rxjs';
 import { Peticion } from '../types';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PrincipalService {
-  private usuariologeado?:Usuario
-  subjectUsuario:Subject<Usuario|undefined>;
+  private usuario:Usuario|undefined
+  private token:string|undefined
+
+  private usuarioSubject = new Subject<Usuario|undefined>()
+  private tokenSubject = new Subject<string|undefined>()
+  
   constructor(private servicioLogin:ServicioLoginService) { 
-    this.usuariologeado = undefined
-    this.subjectUsuario = new Subject<Usuario|undefined>
+   this.usuario = undefined
+   this.token = undefined
+
+   this.hacerLoginToken()
   }
 
-  
-  public get UsuarioLogeado() : Usuario | undefined {
-    return this.usuariologeado; 
+  public get Usuario() : Usuario|undefined {
+    return this.usuario
+
+
   }
 
-  
-  public set UsuarioLogeado(v : Usuario|undefined) {
-    this.usuariologeado = v;
-  }
-  
-  getLoginObservable():Observable<Usuario|undefined>{
-    return this.subjectUsuario.asObservable();
+
+  public get Token() : string|undefined {
+    return this.token
   }
 
-  hacerLoginSinToken(usuario:string, password:string){
-    this.servicioLogin.obtenerTokenLogin(usuario, password).subscribe(peticion=>{
-      console.log(peticion)
-      this.servicioLogin.saveToken(peticion.token)
-      this.usuariologeado = new Usuario(peticion.usuario._id, peticion.usuario.email, peticion.usuario.nombre)
-      this.subjectUsuario.next(this.usuariologeado)
-
-    }, err=>{
-      this.subjectUsuario.next(undefined)
-    })
+  public getUsuarioObservable():Observable<Usuario|undefined>{
+    return this.usuarioSubject.asObservable()
   }
 
-  hacerLoginConToken(){
-    this.servicioLogin.login().subscribe(peticion=>{
-      console.log(peticion)
-      this.usuariologeado = new Usuario(peticion.usuario._id, peticion.usuario.email, peticion.usuario.nombre)
-      this.subjectUsuario.next(this.usuariologeado)
-    },err=>{
-      this.subjectUsuario.next(undefined)
-    })
+  public getTokenObservable():Observable<string|undefined>{
+    return this.tokenSubject.asObservable()
   }
 
-  hacerLogout(){
-    this.servicioLogin.deslogearme().subscribe(peticion=>{
-      this.subjectUsuario.next(undefined)
-      this.servicioLogin.eliminarToken()
-      console.log("Deslogueado")
-
-    },err=>{
-     
-    })
+  public hacerLoginNoToken(email:string, passwd:string):void{
+    this.servicioLogin.obtenerTokenLogin(email, passwd).subscribe(
+      (peticion:Peticion)=>{
+        let usu = new Usuario(peticion.usuario._id,peticion.usuario.email,peticion.usuario.nombre)
+        this.usuarioSubject.next(usu)
+        this.tokenSubject.next(peticion.token)
+        this.servicioLogin.saveToken(peticion.token)
+      })
   }
 
+  public hacerLoginToken():void{
+    this.servicioLogin.login().subscribe(
+      (peticion:Peticion)=>{
+        console.log(peticion)
+        let usu = new Usuario(peticion.usuario._id,peticion.usuario.email,peticion.usuario.nombre)
+        this.usuarioSubject.next(usu)
+        this.tokenSubject.next(peticion.token)
+      },err=>{
+        console.log(err)
+      })
+  }
+
+  public hacerLogout():void{
+    this.usuarioSubject.next(undefined)
+    this.tokenSubject.next(undefined)
+    this.servicioLogin.eliminarToken()
+    this.servicioLogin.deslogearme()
+  }
 }

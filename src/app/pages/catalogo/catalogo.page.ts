@@ -11,19 +11,14 @@ import { PrincipalService } from 'src/app/services/principal.service';
 export class CatalogoPage implements OnInit {
   usuario:Usuario|undefined
   constructor(private servicio:PrincipalService, private router:Router) { 
-    
-    this.servicio.getLoginObservable().subscribe(usuario =>{
-      console.log(usuario)
-      if (usuario==undefined) {
-        console.log("No hay usuario")
-        this.router.navigate(["../login-page"])
+    servicio.getUsuarioObservable().subscribe((usuario)=>{
+      this.usuario = usuario
+      if(usuario==undefined){
+        this.router.navigate(["login-page"])
       }
-      else{
-        this.usuario=usuario
-        console.log(usuario)
-      }
+      
+      
     })
-    servicio.hacerLoginConToken()
   }
 
   ngOnInit() {

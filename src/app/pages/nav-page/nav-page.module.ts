@@ -7,6 +7,8 @@ import { IonicModule } from '@ionic/angular';
 import { NavPagePageRoutingModule } from './nav-page-routing.module';
 
 import { NavPagePage } from './nav-page.page';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptorService } from 'src/app/services/auth-interceptor.service';
 
 @NgModule({
   imports: [

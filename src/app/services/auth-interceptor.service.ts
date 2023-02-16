@@ -22,7 +22,7 @@ export class AuthInterceptorService implements HttpInterceptor {
         'Access-Control-Allow-Origin': '*'
       }
     })
-
+    console.log(authReq)
     return next.handle(authReq)
   }
 }
