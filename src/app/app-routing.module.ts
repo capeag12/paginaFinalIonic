@@ -30,8 +30,15 @@ const routes: Routes = [
   },
   {
     path: 'detalles-usuario',
-    loadChildren: () => import('./pages/detalles-usuario/detalles-usuario.module').then( m => m.DetallesUsuarioPageModule)
+    loadChildren: () => import('./pages/detalles-usuario/detalles-usuario.module').then( m => m.DetallesUsuarioPageModule),
+    canActivate:[GuardLoginGuard]
   },
+  {
+    path: 'juegos-usuario',
+    loadChildren: () => import('./pages/juegos-usuario/juegos-usuario.module').then( m => m.JuegosUsuarioPageModule),
+    canActivate:[GuardLoginGuard]
+  },
+
 
 
 ];

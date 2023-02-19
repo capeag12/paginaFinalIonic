@@ -10,31 +10,10 @@
   <ion-content >
     <ion-list>
       <ion-row>
-        <ion-col size-md="2" size-xs="6">
-          <producto>   
+        <ion-col *ngFor="let item of listaJuegos" size-md="2" size-xs="6">
+          <producto [juego]="item">   
           </producto>
         </ion-col>
-        <ion-col size-md="2" size-xs="6">
-          <producto>   
-          </producto>
-        </ion-col>
-        <ion-col size-md="2" size-xs="6">
-          <producto>   
-          </producto>
-        </ion-col>
-        <ion-col size-md="2" size-xs="6">
-          <producto>   
-          </producto>
-        </ion-col>
-        <ion-col size-md="2" size-xs="6">
-          <producto>   
-          </producto>
-        </ion-col>
-        <ion-col size-md="2" size-xs="6">
-          <producto>   
-          </producto>
-        </ion-col>
-        
     </ion-row>
   </ion-list>
   </ion-content>

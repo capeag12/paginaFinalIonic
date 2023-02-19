@@ -8,9 +8,10 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptorService } from './services/auth-interceptor.service';
+import { MonedaPipe } from './pipes/moneda.pipe';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, MonedaPipe],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },{provide:HTTP_INTERCEPTORS, useClass:AuthInterceptorService, multi:true}],
   bootstrap: [AppComponent],

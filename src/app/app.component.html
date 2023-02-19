@@ -2,22 +2,22 @@
   <ion-menu contentId="main-content">
     <ion-header>
       <ion-toolbar>
-        <ion-title>{{usuario?.Nombre}}</ion-title>
+        <ion-title>{{usuario.Nombre}}</ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content>
       <ion-list lines="full">
-        <ion-item button="true" (click)="navegarDetalles()">
+        <ion-item button="true">
           <ion-icon name="person-outline"></ion-icon>
           <ion-label>
             Perfil
           </ion-label>
         </ion-item>
-        <ion-item button="true">
+        <ion-item button="true" (click)="verProductosUsuario()">
           <ion-icon name="bag-outline"></ion-icon>
           <ion-label>Ver productors</ion-label>
         </ion-item>
-        <ion-item button="true" id="itemBottom" (click)="desloguearme()">
+        <ion-item button="true" id="itemBottom" (click)="cerrarSesion()">
           <ion-icon name="close-circle-outline"></ion-icon>
           <ion-label>Cerrar sesión</ion-label>
         </ion-item>

@@ -9,23 +9,6 @@
 
 <ion-content>
   <ion-list lines="full">
-    <productoLista></productoLista>
-    <productoLista></productoLista>
-    <productoLista></productoLista>
-    <productoLista></productoLista>
-    <productoLista></productoLista>
-    <productoLista></productoLista>
-    <productoLista></productoLista>
-    <productoLista></productoLista>
-    <productoLista></productoLista>
-    <productoLista></productoLista>
-    <productoLista></productoLista>
-    <productoLista></productoLista>
-    <productoLista></productoLista>
-    <productoLista></productoLista>
-    <productoLista></productoLista>
+    <productoLista *ngFor="let item of listaJuegos" [juego]="item"></productoLista>
   </ion-list>
-  
-    
- 
 </ion-content>

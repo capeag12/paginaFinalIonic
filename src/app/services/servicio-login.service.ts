@@ -1,79 +1,81 @@
 import { Injectable } from '@angular/core';
 import { Usuario } from '../models/usuario';
 import { HttpClient } from '@angular/common/http';
-import { catchError, Observable } from 'rxjs';
-import {Peticion} from "../types"
+import { BehaviorSubject, catchError, Observable } from 'rxjs';
+import {Peticion, UsuarioPeticion} from "../types"
 import { Preferences } from '@capacitor/preferences';
 @Injectable({
   providedIn: 'root'
 })
 export class ServicioLoginService {
   private urlbase:string;
-  private token:string|undefined
+  private token:string
+  private iniciada:boolean = false
+  private usuario:Usuario = new Usuario("","","")
+  private usuarioSubject:BehaviorSubject<Usuario> = new BehaviorSubject<Usuario>(this.usuario)
   constructor(private http:HttpClient) { 
     this.urlbase = "http://localhost:3000";
-    this.token = undefined
+    this.token = localStorage.getItem("tokenCarlos")||""
 
   }
 
-  getTokenLocal():string | undefined{
-    let token = localStorage.getItem('tokenTienda');
-    let tokenReturn:string|undefined
-    if (token == null) {
-      tokenReturn = undefined;
+  getToken(usuario:string, contraseña:string):Observable<Peticion>{
+    let usu={
+      email:usuario,
+      passwd:contraseña
     }
-    else{
-      tokenReturn = token;
-    }
-    console.log(tokenReturn)
-    return tokenReturn;
     
+    return this.http.post<Peticion>(this.urlbase+"/loginUsuario",usu)
   }
 
-  async saveToken(token:string){
-    localStorage.setItem('tokenTienda',token)
-    this.token = token
+  login(){
+    return this.http.post<UsuarioPeticion>(this.urlbase+"/loginUsuarioToken","")
   }
 
-  eliminarToken(){
-    localStorage.removeItem('tokenTienda');
+  hacerLogout(){
+    return this.http.post(this.urlbase+"/logout","")
+  }
+
+  registrarme(nombre:string,mail:string,contraseña:string){
+    let usuarioNuevo = {
+      nombre:nombre,
+      email:mail,
+      passwd:contraseña
+    }
+    return this.http.post<Peticion>(this.urlbase+"/registrarUsuario",usuarioNuevo)
   }
 
   
-  public get Token() : string|undefined {
-    return this.token
+  public get Iniciada() : boolean {
+    return this.iniciada
   }
 
-  obtenerTokenLogin(email:string, passwd:string):Observable<Peticion>{
-    let url = this.urlbase+"/loginUsuario";
-    let body = {email:email, passwd:passwd}
-    const texto = JSON.stringify(body)
-    const options = {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    }
-    return this.http.post<Peticion>(url,texto,options)
-    
+  
+  public set Iniciada(v : boolean) {
+    this.iniciada = v;
   }
 
-  login():Observable<Peticion>{
-    const options = {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    }
-    return this.http.post<Peticion>(this.urlbase+"/loginUsuarioToken","",options)
+  
+  public get Usuario() : Usuario {
+    return this.usuario
+  }
+  
+  public get UsuarioSubject() : BehaviorSubject<Usuario> {
+    return this.usuarioSubject
   }
 
-  deslogearme():Observable<Object>{
-    const options = {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    }
-    return this.http.post<Object>(this.urlbase+"/logout","",options)
+  getUsuarioObservable():Observable<Usuario>{
+    return this.usuarioSubject.asObservable()
   }
+  
+  
+
+  
+
+
+
+  
+
   
     
   
